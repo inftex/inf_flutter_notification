@@ -128,6 +128,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  inf_flutter_logger:
+    dependency: transitive
+    description:
+      path: "."
+      ref: "0.0.2"
+      resolved-ref: "25ae6296e868d49fecde2088b8bdb8a0caaead78"
+      url: "https://github.com/inftex/inf_flutter_logger.git"
+    source: git
+    version: "0.0.1"
   inf_flutter_notification:
     dependency: "direct main"
     description:

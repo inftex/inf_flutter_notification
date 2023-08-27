@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:inf_flutter_logger/inf_flutter_logger.dart';
 import 'package:inf_flutter_notification/inf_flutter_notification.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
@@ -31,6 +32,7 @@ class NotificationManager extends INotificationManager {
     _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     _flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (_) {});
+    Logger.info("setup inftex notification");
   }
 
   ///
@@ -63,6 +65,49 @@ class NotificationManager extends INotificationManager {
       notificationDetails,
       payload: payload,
     );
+    Logger.info("show notification $id");
+  }
+
+  ///
+  /// Schedule at specific
+  ///
+  @override
+  void schedule(
+      {required int yyyy,
+      required int MM,
+      required int dd,
+      required int HH,
+      required int mm,
+      required int ss,
+      int? id,
+      String? title,
+      String? description,
+      String? payload,
+      String? androidChannelId,
+      String? androidChannelName,
+      String? anndroidChannelDescription,
+      bool? iosSound}) {
+    //setup moment
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduleDate =
+        tz.TZDateTime(tz.local, yyyy, MM, dd, HH, mm, ss);
+    if (scheduleDate.isBefore(now)) {
+      Logger.error("can not schedule in-the-past notification $id");
+      return;
+    }
+
+    _scheduleNotification(
+      id: id,
+      title: title,
+      description: description,
+      payload: payload,
+      scheduleDate: scheduleDate,
+      androidChannelId: androidChannelId,
+      androidChannelName: androidChannelName,
+      anndroidChannelDescription: anndroidChannelDescription,
+      iosSound: iosSound,
+    );
+    Logger.info("schedule notification $id");
   }
 
   ///
@@ -89,6 +134,52 @@ class NotificationManager extends INotificationManager {
       scheduleDate = scheduleDate.add(const Duration(days: 1));
     }
 
+    _scheduleNotification(
+      id: id,
+      title: title,
+      description: description,
+      payload: payload,
+      scheduleDate: scheduleDate,
+      androidChannelId: androidChannelId,
+      androidChannelName: androidChannelName,
+      anndroidChannelDescription: anndroidChannelDescription,
+      iosSound: iosSound,
+    );
+    Logger.info("schedule daily notification $id");
+  }
+
+  @override
+  void cancel(int id) {
+    _flutterLocalNotificationsPlugin.cancel(id);
+    Logger.info("cancel notification $id");
+  }
+
+  @override
+  void cancelDaily(int? id) {
+    cancel(id ?? idDailyNotification);
+    Logger.info("cancel daily notification $id");
+  }
+
+  @override
+  Future<List<Notification>> getPendingNotifications() async {
+    final list =
+        await _flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return list
+        .map((e) => Notification(
+            id: e.id, title: e.title, body: e.body, payload: e.payload))
+        .toList();
+  }
+
+  void _scheduleNotification(
+      {required int? id,
+      required String? title,
+      required String? description,
+      required String? payload,
+      required tz.TZDateTime scheduleDate,
+      required String? androidChannelId,
+      required String? androidChannelName,
+      required String? anndroidChannelDescription,
+      required bool? iosSound}) {
     _flutterLocalNotificationsPlugin.zonedSchedule(
         id ?? idDailyNotification,
         title,
@@ -108,26 +199,6 @@ class NotificationManager extends INotificationManager {
         androidAllowWhileIdle: true,
         payload: payload,
         matchDateTimeComponents: DateTimeComponents.time);
-  }
-
-  @override
-  void cancel(int id) {
-    _flutterLocalNotificationsPlugin.cancel(id);
-  }
-
-  @override
-  void cancelDaily(int? id) {
-    cancel(id ?? idDailyNotification);
-  }
-
-  @override
-  Future<List<Notification>> getPendingNotifications() async {
-    final list =
-        await _flutterLocalNotificationsPlugin.pendingNotificationRequests();
-    return list
-        .map((e) => Notification(
-            id: e.id, title: e.title, body: e.body, payload: e.payload))
-        .toList();
   }
 
   //android

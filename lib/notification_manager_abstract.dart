@@ -22,6 +22,25 @@ abstract class INotificationManager {
   });
 
   ///
+  /// Schedule at specific date time
+  ///
+  void schedule(
+      {required int yyyy,
+      required int MM,
+      required int dd,
+      required int HH,
+      required int mm,
+      required int ss,
+      int? id,
+      String? title,
+      String? description,
+      String? payload,
+      String? androidChannelId,
+      String? androidChannelName,
+      String? anndroidChannelDescription,
+      bool? iosSound});
+
+  ///
   /// Show notification at HH:mm daily
   ///
   void scheduleDaily({
@@ -39,6 +58,7 @@ abstract class INotificationManager {
   });
 
   void cancel(int id);
+
   void cancelDaily(int? id);
 
   ///

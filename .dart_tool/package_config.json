@@ -110,6 +110,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "inf_flutter_logger",
+      "rootUri": "file:///Users/baotran/Documents/Business/sdk/flutter/.pub-cache/git/inf_flutter_logger-25ae6296e868d49fecde2088b8bdb8a0caaead78/",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "js",
       "rootUri": "file:///Users/baotran/Documents/Business/sdk/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4",
       "packageUri": "lib/",
@@ -242,7 +248,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-08-23T15:40:38.129198Z",
+  "generated": "2023-08-27T13:30:10.746888Z",
   "generator": "pub",
   "generatorVersion": "2.18.2"
 }

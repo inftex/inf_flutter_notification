@@ -1,3 +1,5 @@
+import 'package:inf_flutter_notification/inf_flutter_notification.dart';
+
 abstract class INotificationManager {
   ///
   /// Initialize
@@ -38,4 +40,9 @@ abstract class INotificationManager {
 
   void cancel(int id);
   void cancelDaily(int? id);
+
+  ///
+  /// Get previous scheduled
+  ///
+  Future<List<Notification>> getPendingNotifications();
 }

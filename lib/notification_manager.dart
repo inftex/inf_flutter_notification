@@ -1,10 +1,9 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:inf_flutter_notification/inf_flutter_notification.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
-import 'notification_manager_abstract.dart';
 
 const idDailyNotification = 1111;
 
@@ -119,6 +118,16 @@ class NotificationManager extends INotificationManager {
   @override
   void cancelDaily(int? id) {
     cancel(id ?? idDailyNotification);
+  }
+
+  @override
+  Future<List<Notification>> getPendingNotifications() async {
+    final list =
+        await _flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return list
+        .map((e) => Notification(
+            id: e.id, title: e.title, body: e.body, payload: e.payload))
+        .toList();
   }
 
   //android

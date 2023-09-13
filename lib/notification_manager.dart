@@ -97,16 +97,16 @@ class NotificationManager extends INotificationManager {
     }
 
     _scheduleNotification(
-      id: id,
-      title: title,
-      description: description,
-      payload: payload,
-      scheduleDate: scheduleDate,
-      androidChannelId: androidChannelId,
-      androidChannelName: androidChannelName,
-      anndroidChannelDescription: anndroidChannelDescription,
-      iosSound: iosSound,
-    );
+        id: id,
+        title: title,
+        description: description,
+        payload: payload,
+        scheduleDate: scheduleDate,
+        androidChannelId: androidChannelId,
+        androidChannelName: androidChannelName,
+        anndroidChannelDescription: anndroidChannelDescription,
+        iosSound: iosSound,
+        matchMode: DateTimeComponents.dateAndTime);
     Logger.info("schedule notification $id");
   }
 
@@ -135,16 +135,16 @@ class NotificationManager extends INotificationManager {
     }
 
     _scheduleNotification(
-      id: id,
-      title: title,
-      description: description,
-      payload: payload,
-      scheduleDate: scheduleDate,
-      androidChannelId: androidChannelId,
-      androidChannelName: androidChannelName,
-      anndroidChannelDescription: anndroidChannelDescription,
-      iosSound: iosSound,
-    );
+        id: id,
+        title: title,
+        description: description,
+        payload: payload,
+        scheduleDate: scheduleDate,
+        androidChannelId: androidChannelId,
+        androidChannelName: androidChannelName,
+        anndroidChannelDescription: anndroidChannelDescription,
+        iosSound: iosSound,
+        matchMode: DateTimeComponents.time);
     Logger.info("schedule daily notification $id");
   }
 
@@ -170,6 +170,9 @@ class NotificationManager extends INotificationManager {
         .toList();
   }
 
+  ///
+  /// [matchMode] the condition to fire notification
+  ///
   void _scheduleNotification(
       {required int? id,
       required String? title,
@@ -179,7 +182,8 @@ class NotificationManager extends INotificationManager {
       required String? androidChannelId,
       required String? androidChannelName,
       required String? anndroidChannelDescription,
-      required bool? iosSound}) {
+      required bool? iosSound,
+      required DateTimeComponents matchMode}) {
     _flutterLocalNotificationsPlugin.zonedSchedule(
         id ?? idDailyNotification,
         title,
@@ -198,7 +202,7 @@ class NotificationManager extends INotificationManager {
             UILocalNotificationDateInterpretation.absoluteTime,
         androidAllowWhileIdle: true,
         payload: payload,
-        matchDateTimeComponents: DateTimeComponents.time);
+        matchDateTimeComponents: matchMode);
   }
 
   //android

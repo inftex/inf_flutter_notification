@@ -1,6 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-import 'package:inf_flutter_logger/inf_flutter_logger.dart';
 import 'package:inf_flutter_notification/inf_flutter_notification.dart';
 
 import 'package:timezone/data/latest.dart' as tz;
@@ -32,7 +32,7 @@ class NotificationManager extends INotificationManager {
     _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     _flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (_) {});
-    Logger.info("setup inftex notification");
+    debugPrint("setup inftex notification");
   }
 
   ///
@@ -65,7 +65,7 @@ class NotificationManager extends INotificationManager {
       notificationDetails,
       payload: payload,
     );
-    Logger.info("show notification $id");
+    debugPrint("show notification $id");
   }
 
   ///
@@ -92,7 +92,7 @@ class NotificationManager extends INotificationManager {
     tz.TZDateTime scheduleDate =
         tz.TZDateTime(tz.local, yyyy, MM, dd, HH, mm, ss);
     if (scheduleDate.isBefore(now)) {
-      Logger.error("can not schedule in-the-past notification $id");
+      debugPrint("can not schedule in-the-past notification $id");
       return;
     }
 
@@ -107,7 +107,7 @@ class NotificationManager extends INotificationManager {
         anndroidChannelDescription: anndroidChannelDescription,
         iosSound: iosSound,
         matchMode: DateTimeComponents.dateAndTime);
-    Logger.info("schedule notification $id");
+    debugPrint("schedule notification $id");
   }
 
   ///
@@ -145,19 +145,19 @@ class NotificationManager extends INotificationManager {
         anndroidChannelDescription: anndroidChannelDescription,
         iosSound: iosSound,
         matchMode: DateTimeComponents.time);
-    Logger.info("schedule daily notification $id");
+    debugPrint("schedule daily notification $id");
   }
 
   @override
   void cancel(int id) {
     _flutterLocalNotificationsPlugin.cancel(id);
-    Logger.info("cancel notification $id");
+    debugPrint("cancel notification $id");
   }
 
   @override
   void cancelDaily(int? id) {
     cancel(id ?? idDailyNotification);
-    Logger.info("cancel daily notification $id");
+    debugPrint("cancel daily notification $id");
   }
 
   @override

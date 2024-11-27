@@ -93,7 +93,7 @@
     },
     {
       "name": "flutter_native_timezone",
-      "rootUri": "file:///Users/baotran/.pub-cache/hosted/pub.dev/flutter_native_timezone-1.1.0",
+      "rootUri": "file:///Users/baotran/.pub-cache/hosted/pub.dev/flutter_native_timezone-2.0.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -266,7 +266,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-10-14T15:43:51.515229Z",
+  "generated": "2024-11-27T15:33:57.028152Z",
   "generator": "pub",
   "generatorVersion": "3.5.3",
   "flutterRoot": "file:///Users/baotran/Documents/sdk/flutter3.24.0",

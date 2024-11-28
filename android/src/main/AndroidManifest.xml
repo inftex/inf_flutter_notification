@@ -2,9 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.inf_flutter_notification">
 
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"
-        android:maxSdkVersion="32" tools:node="merge" />
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM" tools:node="merge" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" tools:node="merge" />
+    <!-- <uses-permission android:name="android.permission.USE_EXACT_ALARM" tools:node="merge" /> -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="merge" />
 
     <application>

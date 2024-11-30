@@ -1,14 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
-import 'package:inf_flutter_notification/inf_flutter_notification.dart';
+import 'package:inf_flutter_notification/inf_flutter_notification.dart'
+    as inf_noti;
 
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 const idDailyNotification = 1111;
 
-class NotificationManager extends INotificationManager {
+class NotificationManager extends inf_noti.INotificationManager {
   static NotificationManager? _instance;
   NotificationManager._();
   static NotificationManager get instance {
@@ -83,6 +84,7 @@ class NotificationManager extends INotificationManager {
       String? title,
       String? description,
       String? payload,
+      inf_noti.AndroidScheduleMode? androidScheduleMode,
       String? androidChannelId,
       String? androidChannelName,
       String? anndroidChannelDescription,
@@ -102,6 +104,7 @@ class NotificationManager extends INotificationManager {
         description: description,
         payload: payload,
         scheduleDate: scheduleDate,
+        androidScheduleMode: androidScheduleMode,
         androidChannelId: androidChannelId,
         androidChannelName: androidChannelName,
         anndroidChannelDescription: anndroidChannelDescription,
@@ -122,6 +125,7 @@ class NotificationManager extends INotificationManager {
       String? title,
       String? description,
       String? payload,
+      inf_noti.AndroidScheduleMode? androidScheduleMode,
       String? androidChannelId,
       String? androidChannelName,
       String? anndroidChannelDescription,
@@ -140,6 +144,7 @@ class NotificationManager extends INotificationManager {
         description: description,
         payload: payload,
         scheduleDate: scheduleDate,
+        androidScheduleMode: androidScheduleMode,
         androidChannelId: androidChannelId,
         androidChannelName: androidChannelName,
         anndroidChannelDescription: anndroidChannelDescription,
@@ -161,11 +166,11 @@ class NotificationManager extends INotificationManager {
   }
 
   @override
-  Future<List<Notification>> getPendingNotifications() async {
+  Future<List<inf_noti.Notification>> getPendingNotifications() async {
     final list =
         await _flutterLocalNotificationsPlugin.pendingNotificationRequests();
     return list
-        .map((e) => Notification(
+        .map((e) => inf_noti.Notification(
             id: e.id, title: e.title, body: e.body, payload: e.payload))
         .toList();
   }
@@ -179,6 +184,7 @@ class NotificationManager extends INotificationManager {
       required String? description,
       required String? payload,
       required tz.TZDateTime scheduleDate,
+      required inf_noti.AndroidScheduleMode? androidScheduleMode,
       required String? androidChannelId,
       required String? androidChannelName,
       required String? anndroidChannelDescription,
@@ -200,9 +206,85 @@ class NotificationManager extends INotificationManager {
             )),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
-        androidAllowWhileIdle: true,
+        androidScheduleMode: _genAndroidScheduleMode(androidScheduleMode),
         payload: payload,
         matchDateTimeComponents: matchMode);
+  }
+
+  @override
+  void periodicallyShow(
+      {int? id,
+      String? title,
+      String? description,
+      String? payload,
+      required inf_noti.RepeatInterval repeatInterval,
+      inf_noti.AndroidScheduleMode? androidScheduleMode,
+      String? androidChannelId,
+      String? androidChannelName,
+      String? anndroidChannelDescription,
+      bool? iosSound}) {
+    _flutterLocalNotificationsPlugin.periodicallyShow(
+      id ?? 0,
+      title,
+      description,
+      _genRepeatInterval(repeatInterval),
+      NotificationDetails(
+          android: _createAndroidConfigs(
+            androidChannelId: androidChannelId,
+            androidChannelName: androidChannelName,
+            anndroidChannelDescription: anndroidChannelDescription,
+          ),
+          iOS: _createIosConfigs(
+            iosSound: iosSound,
+          )),
+      payload: payload,
+      androidScheduleMode: _genAndroidScheduleMode(androidScheduleMode),
+    );
+  }
+
+  RepeatInterval _genRepeatInterval(inf_noti.RepeatInterval repeatInterval) {
+    RepeatInterval result;
+    switch (repeatInterval) {
+      case inf_noti.RepeatInterval.everyMinute:
+        result = RepeatInterval.everyMinute;
+        break;
+      case inf_noti.RepeatInterval.hourly:
+        result = RepeatInterval.hourly;
+        break;
+      case inf_noti.RepeatInterval.daily:
+        result = RepeatInterval.daily;
+        break;
+      case inf_noti.RepeatInterval.weekly:
+        result = RepeatInterval.weekly;
+        break;
+    }
+    return result;
+  }
+
+  AndroidScheduleMode? _genAndroidScheduleMode(
+      inf_noti.AndroidScheduleMode? mode) {
+    if (mode == null) {
+      return null;
+    }
+    AndroidScheduleMode? result;
+    switch (mode) {
+      case inf_noti.AndroidScheduleMode.alarmClock:
+        result = AndroidScheduleMode.alarmClock;
+        break;
+      case inf_noti.AndroidScheduleMode.exact:
+        result = AndroidScheduleMode.exact;
+        break;
+      case inf_noti.AndroidScheduleMode.exactAllowWhileIdle:
+        result = AndroidScheduleMode.exactAllowWhileIdle;
+        break;
+      case inf_noti.AndroidScheduleMode.inexact:
+        result = AndroidScheduleMode.inexact;
+        break;
+      case inf_noti.AndroidScheduleMode.inexactAllowWhileIdle:
+        result = AndroidScheduleMode.inexactAllowWhileIdle;
+        break;
+    }
+    return result;
   }
 
   //android

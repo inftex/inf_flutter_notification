@@ -2,4 +2,4 @@
 
 ## Getting Started
 
-Read INotificationManager
+Read INotificationManager, especially setup()

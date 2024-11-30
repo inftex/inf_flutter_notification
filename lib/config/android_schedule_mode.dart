@@ -10,12 +10,12 @@ enum AndroidScheduleMode {
 
   /// Used to specify that the notification should be scheduled to be shown at
   /// the exact time specified but may not execute whilst device is in
-  /// low-power idle mode.
+  /// low-power idle mode. Requires SCHEDULE_EXACT_ALARM permission.
   exact,
 
   /// Used to specify that the notification should be scheduled to be shown at
   /// the exact time specified and will execute whilst device is in
-  /// low-power idle mode.
+  /// low-power idle mode. Requires SCHEDULE_EXACT_ALARM permission.
   exactAllowWhileIdle,
 
   /// Used to specify that the notification should be scheduled to be shown at

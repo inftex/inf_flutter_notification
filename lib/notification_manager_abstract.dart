@@ -5,7 +5,9 @@ abstract class INotificationManager {
   /// Initialize
   /// MUST be called on app startup
   ///
-  /// - Android setup if AndroidScheduleMode.alarmClock/exact/exactAllowWhileIdle
+  /// ANDROID
+  /// - Create WHITE and TRANSPARENT [ic_notification] in drawable
+  /// - if AndroidScheduleMode.alarmClock/exact/exactAllowWhileIdle
   /// Check https://developer.android.com/develop/background-work/services/alarms/schedule
   /// + For normal app, use this permission, remember to ask runtime permission when sdk > 32
   /// <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" tools:node="merge" />

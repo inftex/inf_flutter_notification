@@ -1,6 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.inf_flutter_notification">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" tools:node="merge" /> -->
     <!-- <uses-permission android:name="android.permission.USE_EXACT_ALARM" tools:node="merge" /> -->

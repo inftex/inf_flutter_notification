@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:inf_flutter_notification/inf_flutter_notification.dart'
     as inf_noti;
 
@@ -334,7 +334,7 @@ class NotificationManager extends inf_noti.INotificationManager {
   //timezone
   Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
-    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    final String timeZone = await FlutterTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZone));
   }
 }

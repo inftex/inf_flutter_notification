@@ -204,8 +204,8 @@ class NotificationManager extends inf_noti.INotificationManager {
             iOS: _createIosConfigs(
               iosSound: iosSound,
             )),
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
+        // uiLocalNotificationDateInterpretation:
+        //     UILocalNotificationDateInterpretation.absoluteTime,
         androidScheduleMode: _genAndroidScheduleMode(androidScheduleMode),
         payload: payload,
         matchDateTimeComponents: matchMode);
@@ -261,10 +261,10 @@ class NotificationManager extends inf_noti.INotificationManager {
     return result;
   }
 
-  AndroidScheduleMode? _genAndroidScheduleMode(
+  AndroidScheduleMode _genAndroidScheduleMode(
       inf_noti.AndroidScheduleMode? mode) {
     if (mode == null) {
-      return null;
+      return AndroidScheduleMode.inexactAllowWhileIdle;
     }
     AndroidScheduleMode? result;
     switch (mode) {
@@ -316,8 +316,8 @@ class NotificationManager extends inf_noti.INotificationManager {
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
-      onDidReceiveLocalNotification:
-          (int id, String? title, String? body, String? payload) async {},
+      // onDidReceiveLocalNotification:
+      //     (int id, String? title, String? body, String? payload) async {},
       notificationCategories: darwinNotificationCategories,
     );
     return initializationSettingsDarwin;
